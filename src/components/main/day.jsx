@@ -127,6 +127,7 @@ const ActiveParams = styled.div`
 const OffParams = styled.div``;
 
 const Temp = styled.div`
+  font-family: "Orbitron", sans-serif;
   font-size: ${(props) => (props.selected === props.number ? "30px" : "28px")};
   color: ${(props) =>
     props.selected === props.number ? "#101014" : "#FFFFFF"};
@@ -145,6 +146,7 @@ const ParamGroup = styled.div`
 `;
 
 const Bold = styled.div`
+  font-family: "Orbitron", sans-serif;
   color: #101014;
   font-weight: bold;
 `;
@@ -184,7 +186,6 @@ const Parameters = (props) => {
 
 const Day = (props) => {
   const { selectedDay, setDay } = useContext(ModeContext);
-
   return (
     <Container
       selected={typeof selectedDay !== "undefined" ? selectedDay : 0}
@@ -194,7 +195,11 @@ const Day = (props) => {
       }}
     >
       <WeekDay
-        time={props.weather.datetimeStr}
+        time={
+          typeof props.weather.datetimeStr === "undefined"
+            ? props.weather.datetime
+            : props.weather.datetimeStr
+        }
         selected={typeof selectedDay !== "undefined" ? selectedDay : 0}
         number={props.number}
       />

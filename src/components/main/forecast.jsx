@@ -66,11 +66,7 @@ const Forecast = (props) => {
         )}
         {typeof weather !== "undefined" ? (
           timeForecast === "Tommorow" ? (
-            <Day
-              weather={weather.currentConditions}
-              selected={true}
-              number={0}
-            />
+            <Day weather={weather.values[1]} selected={true} number={0} />
           ) : (
             ""
           )
