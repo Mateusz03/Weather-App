@@ -14,6 +14,7 @@ function App() {
   const [weather, setWeather] = useState();
   const [selectedDay, setDay] = useState(0);
   const [move, setMove] = useState(0);
+  const [loader, setLoader] = useState(false);
   return (
     <ModeContext.Provider
       value={{
@@ -27,6 +28,8 @@ function App() {
         setDay,
         move,
         setMove,
+        loader,
+        setLoader,
       }}
     >
       <AppContainer mode={mode}>

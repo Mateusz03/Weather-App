@@ -11,6 +11,7 @@ import LeftBar from "./nav/leftBar";
 import Main from "./main/main";
 import Forecast from "./main/forecast";
 import Day from "./main/day";
+import Loader from "./main/loader";
 //Main Imports
 
 export { AppContainer, Header, Input, DarkModeSwitch, Location };
@@ -19,5 +20,5 @@ export { AppContainer, Header, Input, DarkModeSwitch, Location };
 export { Navigation, RightBar, LeftBar };
 //Nav Exports
 
-export { Main, Forecast, Day };
+export { Main, Forecast, Day, Loader };
 //Main Exports

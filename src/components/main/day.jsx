@@ -6,8 +6,18 @@ import windSpeed from "../../functions/windSpeedConvert";
 
 const Container = styled.div`
   background-color: ${(props) =>
-    props.selected === props.number ? "#BBD8EA" : "#1B1A1D"};
+    props.selected === props.number
+      ? "#BBD8EA"
+      : props.mode === "dark"
+      ? "#1B1A1D"
+      : "#282828"};
   width: ${(props) => (props.selected === props.number ? "250px" : "125px")};
+  box-shadow: ${(props) =>
+    props.selected === props.number
+      ? props.mode === "dark"
+        ? ""
+        : "0px 0px 4px 2px rgba(40, 40, 40,0.4)"
+      : ""};
   height: 250px;
   border-radius: 25px;
   transition: 150ms;
@@ -185,7 +195,7 @@ const Parameters = (props) => {
 };
 
 const Day = (props) => {
-  const { selectedDay, setDay } = useContext(ModeContext);
+  const { selectedDay, setDay, mode } = useContext(ModeContext);
   return (
     <Container
       selected={typeof selectedDay !== "undefined" ? selectedDay : 0}
@@ -193,6 +203,7 @@ const Day = (props) => {
       onClick={() => {
         setDay(props.number);
       }}
+      mode={mode}
     >
       <WeekDay
         time={

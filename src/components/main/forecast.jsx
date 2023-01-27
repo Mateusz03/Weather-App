@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ModeContext } from "../../App";
-import { Day } from "../imports";
+import { Day, Loader } from "../imports";
 import { ReactComponent as ArrowImage } from "../../img/arrow.svg";
 
 const Container = styled.div`
@@ -9,6 +9,15 @@ const Container = styled.div`
   height: 40%;
   overflow: hidden;
   position: relative;
+  display: flex;
+  align-items: ${(props) =>
+    props.loader === true || props.timeForecast !== "Next 16 days"
+      ? "center"
+      : ""};
+  justify-content: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  flex-direction: column;
 `;
 const OverflowSwap = styled.div`
   width: calc(250px + 125px * 15 + 25px * 15);
@@ -19,6 +28,10 @@ const OverflowSwap = styled.div`
   transition: 150ms;
   position: relative;
   left: ${(props) => props.move + "%"};
+  display: flex;
+  justify-content: ${(props) =>
+    props.timeForecast !== "Next 16 days" ? "center" : ""};
+  flex-direction: row;
 `;
 
 const SwapContainer = styled.div`
@@ -46,12 +59,21 @@ const Arrow = styled.div`
 `;
 
 const Forecast = (props) => {
-  const { mode, weather, timeForecast, move, setMove } =
+  const { mode, weather, timeForecast, move, setMove, loader } =
     useContext(ModeContext);
   return (
-    <Container active={props.active}>
-      <OverflowSwap active={props.active} move={move}>
-        {typeof weather !== "undefined" ? (
+    <Container
+      active={props.active}
+      loader={loader}
+      timeForecast={timeForecast}
+    >
+      {loader === true ? <Loader /> : ""}
+      <OverflowSwap
+        active={props.active}
+        move={move}
+        timeForecast={timeForecast}
+      >
+        {typeof weather !== "undefined" && loader === false ? (
           timeForecast === "Today" ? (
             <Day
               weather={weather.currentConditions}
@@ -64,7 +86,7 @@ const Forecast = (props) => {
         ) : (
           ""
         )}
-        {typeof weather !== "undefined" ? (
+        {typeof weather !== "undefined" && loader === false ? (
           timeForecast === "Tommorow" ? (
             <Day weather={weather.values[1]} selected={true} number={0} />
           ) : (
@@ -74,7 +96,7 @@ const Forecast = (props) => {
           ""
         )}
 
-        {typeof weather !== "undefined"
+        {typeof weather !== "undefined" && loader === false
           ? timeForecast === "Next 16 days"
             ? weather.values.map((currentConditions, i) => {
                 return <Day key={i} weather={currentConditions} number={i} />;
@@ -82,7 +104,7 @@ const Forecast = (props) => {
             : ""
           : ""}
       </OverflowSwap>
-      {typeof weather !== "undefined" ? (
+      {typeof weather !== "undefined" && loader === false ? (
         timeForecast === "Next 16 days" ? (
           <SwapContainer>
             <Arrow

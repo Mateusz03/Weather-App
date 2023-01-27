@@ -41,10 +41,16 @@ const Inp = styled.input`
 `;
 
 const Input = () => {
-  const { mode, setWeather } = useContext(ModeContext);
+  const { mode, setWeather, setLoader } = useContext(ModeContext);
   const [cityName, setCityName] = useState("");
   const Search = async () => {
-    setWeather(await RequestWeather(cityName));
+    try {
+      setLoader(true);
+      setWeather(await RequestWeather(cityName));
+      setLoader(false);
+    } catch {
+      setLoader(false);
+    }
   };
 
   return (
